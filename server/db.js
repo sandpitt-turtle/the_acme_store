@@ -93,12 +93,12 @@ const createFavorite = async ({ user_id, product_id }) => {
   };
   
   
-  const destroyFavorite = async ({ user_id, product_id }) => {
+  const destroyFavorite = async ({ user_id, id }) => { //ID is favorites ID
     const SQL = `
       DELETE FROM favorites
-      WHERE user_id = $1 AND product_id = $2
+      WHERE user_id = $1 AND id = $2
     `;
-    await client.query(SQL, [user_id, product_id]);
+    await client.query(SQL, [user_id, id]);
   };
   
   
