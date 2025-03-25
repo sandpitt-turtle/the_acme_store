@@ -28,6 +28,18 @@ app.get('/api/products',
 });
 
 
+app.post('/api/products', async (req, res, next) => {
+    try {
+      const newProduct = await createProduct({
+        name: req.body.name,
+      });
+      res.status(201).send(newProduct);
+    } catch (ex) {
+      next(ex);
+    }
+  });
+  
+
 app.post('/api/users', async (req, res, next) => {
     try {
       const newUser = await createUser({
