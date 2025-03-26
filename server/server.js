@@ -40,6 +40,16 @@ app.post('/api/products', async (req, res, next) => {
   });
   
 
+  app.get('/api/users', async (req, res, next) => {
+    try {
+      const users = await fetchUsers();
+      res.send(users);
+    } catch (ex) {
+      next(ex);
+    }
+  });
+  
+
 app.post('/api/users', async (req, res, next) => {
     try {
       const newUser = await createUser({
@@ -89,6 +99,9 @@ app.post('/api/users', async (req, res, next) => {
     }
   });
   
+  app.use((err, req, res, next)=> {
+    res.status(err.status || 500).send({ error: err.message || err});
+});
 
 const init = async() => {
   const port = 3000
@@ -133,7 +146,12 @@ console.log(`curl -X DELETE localhost:${port}/api/users/${millie.id}/favorites/$
 console.log(`curl localhost:${port}/api/users/${millie.id}/favorites`);
 
 
-}
+};
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Running on http://localhost:${PORT}`);
+});
   
 
 init()
